@@ -1,0 +1,46 @@
+.card-title{
+	color: darkslategrey;
+	text-align: right;
+	font-size: 3vw;
+	margin-top: 13rem;
+	margin-right: 2rem;
+}
+.card-img{
+	max-width: 100%;
+    height: 39rem;
+}
+.card-text{
+	color: aliceblue;
+	padding-left: 5rem;;
+	margin-right: 2rem;
+	font-size: 1.5vw;
+	text-align: justify;
+}
+.align_button{
+	padding-left: 5rem;
+	margin-right: 2rem;
+}
+.form_style{
+	margin: 2rem;
+	font-weight: bolder;
+}
+.form-control{
+	margin-bottom: 2rem;
+}
+.whole{
+	background-image: url(/media/thilak/Wow.../my_works/medical_pro/public/s2.jpg);
+}
+.page2{
+	background-image: url(/media/thilak/Wow.../my_works/medical_pro/public/a5.jpg);
+	height: -webkit-fill-available;
+	background-size: cover;
+}
+.footer_bg{
+	background-color:darkslategray;
+	position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: white;
+}
+
