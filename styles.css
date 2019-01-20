@@ -45,6 +45,7 @@
 }
 a.btn.btn-outline-warning.btn-block:hover {
     background: #9280a4;
+    border-spacing: 0px;
 }
 a.btn.btn-outline-warning.btn-block{
     border-color: white;
