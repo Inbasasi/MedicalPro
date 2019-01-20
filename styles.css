@@ -67,6 +67,16 @@ a.btn.btn-outline-warning.btn-block{
 }
 }
 
+img {
+  max-width: 100%; 
+
+#canvas {
+  height: 600px;
+  width: 600px;
+  background-color: #ffffff;
+  cursor: default;
+  border: 1px solid black;
+}
 
 
 
