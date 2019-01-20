@@ -12,14 +12,7 @@
 
 </head>
 <body class="page2">
-	<script type="text/javascript">
-		function page1(){
-			location.href="home.html";
-		}
-		function takePhoto(){
 
-		}
-	</script>
 	<div class="container">
 		<div class="alert alert-success mt-4" style="height: 3rem;">
 			<div class="row">
@@ -91,12 +84,15 @@
 					  	</div>
 					</div>
 					<div class="col-md-4">
-						<button type="button"  class="btn btn-default form-control btn-dark">Scan Prescription</button>
-						<input type="file" name="image" accept="image/*" capture="environment">
+					    <label for="files" class="btn btn-default form-control btn-dark">Scan Prescription</label>
+     					 <input id="files" style="visibility:hidden;" type="file" name="image" accept="image/*" capture="environment">
 					</div>
 				</div>
 			</div></strong>
 		</form>
+	</div>
+	<div class="img-fluid" alt="Responsive image">
+		<canvas></canvas>
 	</div>
 	<footer class="footer_bg">
 		<div class="row">
@@ -109,5 +105,44 @@
 		</div>
 	</footer>
 	
+	<!--Script-->
+
+	<script type="text/javascript">
+		var input = document.querySelector('input[type=file]');
+  		input.onchange = function () {
+    	var file = input.files[0];
+    	drawOnCanvas(file);
+    	};
+
+    	function drawOnCanvas(file) {
+		  var reader = new FileReader();
+		  reader.onload = function (e) {
+		    var dataURL = e.target.result,
+		        c = document.querySelector('canvas'),
+		        ctx = c.getContext('2d'),
+		        img = new Image();
+
+		    img.onload = function() {
+		      c.width = img.width;
+		      c.height = img.height;
+		      ctx.drawImage(img, 50, 50);
+		    };
+
+		    img.src = dataURL;
+		  };
+
+		  reader.readAsDataURL(file);
+		}
+
+		function page1(){
+			location.href="home.html";
+		}
+
+		function takePhoto(){
+
+		}
+		
+
+	</script>
 </body>
 </html>
