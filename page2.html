@@ -8,6 +8,8 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+<link  href="node_modules/cropperjs/dist/cropper.css" rel="stylesheet">
+<script src="node_modules/cropperjs/dist/cropper.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 </head>
@@ -91,9 +93,12 @@
 			</div></strong>
 		</form>
 	</div>
+	<p class="container"><a class="btn btn-primary" id="btnCrop">Crop</a><a class="btn btn-primary" id="btnRestore">Reset</a></p>
 	<div class="img-fluid" alt="Responsive image">
-		<canvas></canvas>
+		 <canvas id="canvas"></canvas>
 	</div>
+	<div id="result" class="container m-5"></div>
+
 	<footer class="footer_bg">
 		<div class="row">
 			<div class="col-md-2">
@@ -108,40 +113,60 @@
 	<!--Script-->
 
 	<script type="text/javascript">
-		var input = document.querySelector('input[type=file]');
+		var canvas  = $("#canvas"),
+	    context = canvas.get(0).getContext("2d"),
+	    $result = $('#result');
+	    var input = document.querySelector('input[type=file]');
   		input.onchange = function () {
-    	var file = input.files[0];
-    	drawOnCanvas(file);
-    	};
+		    if (this.files && this.files[0]) {
+		      if ( this.files[0].type.match(/^image\//) ) {
+		        var reader = new FileReader();
+		        reader.onload = function(evt) {
+		           var img = new Image();
+		           img.onload = function() {
+		             context.canvas.height = img.height;
+		             context.canvas.width  = img.width;
+		             context.drawImage(img, 0, 0);
 
-    	function drawOnCanvas(file) {
-		  var reader = new FileReader();
-		  reader.onload = function (e) {
-		    var dataURL = e.target.result,
-		        c = document.querySelector('canvas'),
-		        ctx = c.getContext('2d'),
-		        img = new Image();
 
-		    img.onload = function() {
-		      c.width = img.width;
-		      c.height = img.height;
-		      ctx.drawImage(img, 50, 50);
-		    };
 
-		    img.src = dataURL;
-		  };
+		            var image = document.getElementById('canvas');
+		            var cropper = new Cropper(image, {
+				        aspectRatio: 16 / 9
+				      });
 
-		  reader.readAsDataURL(file);
-		}
 
-		function page1(){
-			location.href="home.html";
-		}
 
-		function takePhoto(){
+		     
+		             $('#btnCrop').click(function() {
+		                var croppedImageDataURL =  cropper.getCroppedCanvas().toDataURL();
+		                $result.append( $('<img>').attr('src', croppedImageDataURL) );
+		             });
+		             $('#btnRestore').click(function() {		              
+		               $result.empty();
+		             });
+		           };
+		           img.src = evt.target.result;
+						};
+		        reader.readAsDataURL(this.files[0]);
+		      }
+		      else {
+		        alert("Invalid file type! Please select an image file.");
+		      }
+		    }
+		    else {
+		      alert('No file(s) selected.');
+		    }
+		};
 
-		}
-		
+			function page1(){
+				location.href="home.html";
+			}
+
+			function takePhoto(){
+
+			}
+			
 
 	</script>
 </body>
