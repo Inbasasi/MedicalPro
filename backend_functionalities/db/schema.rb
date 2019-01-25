@@ -10,7 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_22_181705) do
+ActiveRecord::Schema.define(version: 2019_01_25_190132) do
+
+  create_table "medical_shops", force: :cascade do |t|
+    t.string "name"
+    t.string "web"
+    t.string "address"
+    t.string "city"
+    t.string "state"
+    t.string "mobile"
+    t.string "mail"
+    t.string "password"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "prescriptions", force: :cascade do |t|
     t.string "name"

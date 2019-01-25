@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="styles.css">
+<title>Medical Shop</title>
+<!-- Bootstrap files -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body class="page2"  style="color: white;">
+
+	<div class="container">
+		<div class="alert alert-default mt-4" style="height: 3rem;color: wheat;">
+			<div class="row">
+				<div class="col text-left">
+					<p><strong>Welcome</strong></p>
+				</div>
+				<div class="col text-right">
+					<a class="btn" onclick="page1()"><strong>Back</strong></a>
+				</div>
+			</div>
+		</div>
+							<small class="form-text text-white mb-2">Fill all the required details to experience our service</small>
+
+<!-- 		<p class="center"><strong>Medicines requested from</strong></p>
+ -->		<form><strong>
+			<div class="needs-validation form-group" novalidate>
+				<div class="row">
+					<div class="col-md-6">
+						<label for="name">Name of the Medical Shop</label>
+						<input type="text" name="name" placeholder="Medgreen Pharmacy" class="form-control mb-2" required>
+						<small id="nameHelp" class="form-text text-white mb-2">Drugstore chain with health & beauty items, plus first-aid supplies & some household products.</small>
+					</div>
+					<div class="col-md-6">
+						<label for="mail">Website</label>
+						<input type="text" name="web" placeholder="www.medgreens.com" class="form-control mb-2" required>
+					</div>
+				</div>
+
+				<label for="address">Location</label>
+				<input type="text" name="address" placeholder=" 2nd Main Road, Kottur Gardens, Adyar House, Kotturpuram, Chennai, Tamil Nadu 600085" required class="form-control mb-2">
+
+				<div class="row">
+					<div class="col-md-6">
+						<label for="city">City</label>
+						<input type="text" name="city" placeholder="Chennai" class="form-control mb-2" required>
+					</div>
+					<div class="col-md-6">
+						<label for="state">State</label>
+						<input type="text" name="state" placeholder="Tamilnadu" class="form-control mb-2" required>
+					</div>
+				</div>
+				
+
+				<div class="row">
+					<div class="col-md-8">
+						<label for="hours">Pharmacy Hours</label>
+						<select class="form-control mb-2">
+							<option>Sunday 9.00 AM - 6.00 PM</option>
+							<option>Monday 9.00 AM -10.30 PM</option>
+							<option>Tuesday 9.00 AM - 10.30 PM</option>
+							<option>Wednesday 9.00 AM - 10.30 PM</option>
+							<option>Thursday 9.00 AM - 10.30 PM</option>
+							<option>Friday 9.00 AM - 10.30 PM</option>
+							<option>Saturday 9.00 AM -10.30 PM</option>
+						</select>
+					</div>
+					<div class="col-md-4">
+						<label for="phone">Mobile No</label>
+						<input type="numbe2" name="mobile" placeholder="9963421022" class="form-control mb-2" required>
+					</div>
+				</div>
+
+				<div class="row mt-2">
+					<div class="col-md-8">
+						<div class="checkbox">
+					    	<label><input type="checkbox"> The information furnished above is true and I aaccept the terms and conditions.</label>
+					  	</div>
+					</div>
+					<div class="col-md-4">
+					    <a class="btn btn-block btn-outline-success" data-toggle="modal" data-target="#myModal">Register</a>
+					</div>
+				</div>
+			</div></strong>
+		</form>
+
+		<div id="myModal" class="modal fade text-dark" role="dialog">
+		  <div class="modal-dialog">
+
+		    <!-- Modal content-->
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h4 class="modal-title">Registration</h4>
+		      </div>
+		      <div class="modal-body text-info">
+		        <p><strong>Enter your mail id and password to complete the registration process</strong></p>
+		        <form class="form_style"> 
+					<div class="form-group">
+						<div class="form-row">
+							<div class="col">
+								<input type="text" name="mail" placeholder="Email id" required class="form-control">
+							</div>
+						</div>
+						<input type="text" name="password" placeholder="Password" required class="form-control">
+					</div>
+				</form>
+		      </div>
+		      <div class="modal-footer">
+		      	<button type="button" class="btn btn-info" onclick="registerShop()">Proceed</button>
+		        <button type="button" class="btn btn-danger" data-dismiss="modal">Abort</button>
+		      </div>
+		    </div>
+
+		  </div>
+		</div>
+
+	</div>
+
+	<script type="text/javascript">
+		
+		function registerShop(){
+			var name = document.getElementsByName("name")[0].value;
+			var web = document.getElementsByName("web")[0].value;
+			var address = document.getElementsByName("address")[0].value;
+			var city = document.getElementsByName("city")[0].value;
+			var state = document.getElementsByName("state")[0].value;
+			var mobile = document.getElementsByName("mobile")[0].value;
+			var mail = document.getElementsByName("mail")[0].value;
+			var password = document.getElementsByName("password")[0].value;
+
+			// api call
+			var url = 'http://localhost:3000/medical_shops#index';
+			var data = {name: name, web: web, address: address, city: city, state: state, mobile: mobile, mail: mail, password: password};
+
+			fetch(url, {
+			  method: 'POST', // or 'PUT'
+			  body: JSON.stringify(data), // data can be `string` or {object}!
+			  headers:{
+			    'Content-Type': 'application/json'
+			  }
+			}).then(res => res.json())
+			.then(response => console.log('Success:', JSON.stringify(response)))
+			.catch(error => console.error('Error:', error));
+
+			alert("Medical Shop has been registered successfully")
+		}
+
+		function page1(){
+			location.href="home.html";
+		}
+
+	</script>
+
+
+

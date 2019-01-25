@@ -1,0 +1,2 @@
+class MedicalShop < ApplicationRecord
+end

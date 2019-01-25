@@ -4,8 +4,10 @@ Rails.application.routes.draw do
   get 'scan' => 'prescriptions#scan'
   resources :victim
 
-  resources :prescriptions, only: [:new, :create, :index, :destroy]
+  resources :prescriptions, only: [:new, :create, :index, :destroy, :show]
+  resources :medical_shops, only: [:new, :create, :index, :destroy]
   # root to: 'prescriptions#index'
+  root to: 'medical_shops#index'
   root to: 'prescriptions#show'
 
 end

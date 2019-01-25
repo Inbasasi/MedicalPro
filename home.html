@@ -13,6 +13,37 @@
 </head>
 <script type="text/javascript">
 
+	function gotoPharmacy() {
+		document.getElementById("userForm").style.visibility="hidden";
+		document.getElementById("shopForm").style.visibility="visible";
+	}
+
+	function gotoCustomer() {
+		document.getElementById("userForm").style.visibility="visible";
+		document.getElementById("shopForm").style.visibility="hidden";
+	}
+
+	function gotoNewPharmacy() {
+		location.href="pharmacy.html";	
+	}
+
+	function PharmacyCall() {
+		var mail = document.getElementsByName("mail")[0].value;
+		var password = document.getElementsByName("password")[0].value;
+		var url = 'http://localhost:3000/medical_shops#show';
+		var data = {mail: mail, password: password};
+
+		fetch(url, {
+		  method: 'POST', // or 'PUT'
+		  body: JSON.stringify(data), // data can be `string` or {object}!
+		  headers:{
+		    'Content-Type': 'application/json'
+		  }
+		}).then(res => res.json())
+		.then(response => console.log('Success:', JSON.stringify(response)))
+		.catch(error => console.error('Error:', error));
+
+	}
 	// Api call
 
 	function VictimCall() {
@@ -52,7 +83,7 @@
 			</div>
 		</div>
 		<div class="col-md-4">
-			<form class="form_style"> 
+			<form class="form_style"  id="userForm"> 
 				<div class="form-group">
 					<div class="form-row">
 						<div class="col">
@@ -64,12 +95,28 @@
 					</div>
 					<input type="text" name="mobileno" placeholder="Mobile No" required class="form-control">
 					<a class="btn btn-outline-warning btn-block" onclick="VictimCall()">Continue</a><br>
-					<a class="btn text-white" onclick="gotoPharmacy()">Click here to Pharmacy view</a>
+					<a class="btn text-white" onclick="gotoPharmacy()">Click here to Medical Shop</a>
+				</div>
+			</form>
+			<form class="form_style"  id="shopForm" style="visibility: hidden;"> 
+				<div class="form-group">
+					<div class="form-row">
+						<div class="col">
+							<input type="text" name="mail" placeholder="Email id" required class="form-control">
+						</div>
+					</div>
+					<input type="text" name="password" placeholder="Password" required class="form-control">
+					<a class="btn btn-outline-warning btn-block" onclick="PharmacyCall()">Continue</a><br>
+					<div class="text-center">
+						<a class="btn text-white" onclick="gotoCustomer()">Click here to Customer view</a>
+						<a class="btn text-warning" onclick="gotoNewPharmacy()">New Account</a>
+					</div>
+					
 				</div>
 			</form>
 		</div>
 	</div>
-	<footer class="footer_bg">
+	<!-- <footer class="footer_bg">
 		<div class="row">
 			<div class="col-md-4">
 				<div class="text-left" style="margin-left: 2rem">© 2018 WeCareYou</div>
@@ -78,7 +125,7 @@
 				<div class="text-right" style="margin-right: 2rem">Contact us: support@wecareyou.com</div>
 			</div>
 		</div>
-	</footer>
+	</footer> -->
 </div>
 </body>
 </html>
