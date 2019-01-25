@@ -96,12 +96,16 @@
 		<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" id="btnCrop">Crop</button>
 		<button type="button" class="btn btn-info btn-lg" id="btnRestore">Reset</button>
 	</p>
+
+	<!-- <button type="button" class="btn btn-info" onclick="showimage()">show</button> -->
+	<!-- <div id="check"></div> -->
+
 	<div class="container img-fluid" alt="Responsive image">
 		 <canvas id="canvas" class="mr-5"></canvas>
 	</div>
 	
 	<!--popup to show image -->
-	<div id="myModal" class="modal fade" role="dialog">
+	<div id="myModal" class="modal fade text-dark" role="dialog">
 	  <div class="modal-dialog">
 
 	    <!-- Modal content-->
@@ -109,12 +113,12 @@
 	      <div class="modal-header">
 	        <h4 class="modal-title">Cropped Image</h4>
 	      </div>
-	      <div class="modal-body">
+	      <div class="modal-body text-info">
 	        <p><strong>click proceed button to send the prescription</strong></p>
 	        <div id="result" class="m-5"></div>
 	      </div>
 	      <div class="modal-footer">
-	      	<button type="button" class="btn btn-info">Proceed</button>
+	      	<button type="button" class="btn btn-info" onclick="UploadPrescription()">Proceed</button>
 	        <button type="button" class="btn btn-danger" data-dismiss="modal">Abort</button>
 	      </div>
 	    </div>
@@ -140,6 +144,7 @@
 	    context = canvas.get(0).getContext("2d"),
 	    $result = $('#result');
 	    var input = document.querySelector('input[type=file]');
+	    console.log(input.files[0]);
   		input.onchange = function () {
 		    if (this.files && this.files[0]) {
 		      if ( this.files[0].type.match(/^image\//) ) {
@@ -154,14 +159,17 @@
 					document.getElementById("picEdit").style.visibility="visible";
 		            var image = document.getElementById('canvas');
 		            var cropper = new Cropper(image, {
-				        aspectRatio: 1 / 1
+				        aspectRatio: 1 / 1,
+				        setDragMode: "move"
 				      });
+		            // cropper.rotateTo(180);
+		            // setDragMode("move");
 
 
 
 		     
 		             $('#btnCrop').click(function() {
-		                var croppedImageDataURL =  cropper.getCroppedCanvas().toDataURL();
+		                croppedImageDataURL =  cropper.getCroppedCanvas().toDataURL();
 		                console.log(croppedImageDataURL);
 		                $result.append( $('<img>').attr('src', croppedImageDataURL) );
 		             });
@@ -182,13 +190,52 @@
 		    }
 		};
 
-			function page1(){
-				location.href="home.html";
-			}
+		function page1(){
+			location.href="home.html";
+		}
 
-			function takePhoto(){
+		function takePhoto(){
 
-			}
+		}
+
+		// Api call
+
+		function UploadPrescription() {
+
+		  	var url = 'http://localhost:3000/prescriptions#create';
+			var data = {name: "example", mobileNo: "977232323", medical_sheet: croppedImageDataURL};
+			var formData = new FormData();
+			// $result = $('#result');
+			formData.append('name', 'inba');
+			formData.append('mobileNo', '9043595542');
+			formData.append('photo', input.files[0]);
+			formData.append('url', croppedImageDataURL)
+			fetch(url, {
+			  method: 'POST', // or 'PUT'
+			  body: formData // data can be `string` or {object}!
+			  // headers:{
+			  //   'Content-Type': 'multipart/form-data'
+			  // }
+			})
+			.then(response => response.json())
+			.catch(error => console.error('Error:', error))
+			.then(response => console.log('Success:', JSON.stringify(response)));
+
+		}
+
+		function showimage(){
+			var url = 'http://localhost:3000/prescriptions#show';
+			fetch(url)
+			.then((res) => { return res.json() })
+			.then((data) => {
+				console.log(data.url)
+            $('#check').append( $('<img>').attr('src', data.url))
+        });
+
+		}
+
+
+			
 			
 
 	</script>

@@ -12,8 +12,26 @@
 
 </head>
 <script type="text/javascript">
-	function main(){
-		location.href="page2.html";	
+
+	// Api call
+
+	function VictimCall() {
+
+
+	  	var url = 'http://localhost:3000/victim#create';
+		var data = {name: "example", mobileNo: "977232323"};
+
+		fetch(url, {
+		  method: 'POST', // or 'PUT'
+		  body: JSON.stringify(data), // data can be `string` or {object}!
+		  headers:{
+		    'Content-Type': 'application/json'
+		  }
+		}).then(res => res.json())
+		.then(response => console.log('Success:', JSON.stringify(response)))
+		.catch(error => console.error('Error:', error));
+
+	    location.href="page2.html";	
 	}
 </script>
 <body class="whole">
@@ -36,7 +54,7 @@
 		<div class="col-md-4">
 			<form class="form_style"> 
 				<div class="form-group">
-					<div class=form-row>
+					<div class="form-row">
 						<div class="col">
 							<input type="text" name="firstname" placeholder="First Name" required class="form-control">
 						</div>
@@ -45,7 +63,8 @@
 						</div>
 					</div>
 					<input type="text" name="mobileno" placeholder="Mobile No" required class="form-control">
-					<a class="btn btn-outline-warning btn-block" onclick="main()">Continue</a>
+					<a class="btn btn-outline-warning btn-block" onclick="VictimCall()">Continue</a><br>
+					<a class="btn text-white" onclick="gotoPharmacy()">Click here to Pharmacy view</a>
 				</div>
 			</form>
 		</div>
