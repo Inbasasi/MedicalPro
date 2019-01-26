@@ -12,12 +12,39 @@ class MedicalShopsController < ApplicationController
 	end
 
 	def show
+	  medical_shop = MedicalShop.where(mail: params[:mail])
+	  if params[:mail].present? 
+	  	if params[:password].present?
+		  authentication params, medical_shop
+		else
+		  fetch_data medical_shop
+		end
+	  end
+	end
+
+	def authentication params, medical_shop
+	  if medical_shop.present? && medical_shop[0].password.eql?(params[:password]) then
+	    # @medical_shop[1].merge(:authentication => true)
+	    render json:medical_shop
+	  else
+	    render json:{'authentication' => false}
+	  end
+	end
+
+	def fetch_data medical_shop
+ 	  if medical_shop.present? then
+	  	render json:medical_shop
+	  else
+	  	render json:{'Message' => "MedicalShop Not Found"}
+	  end
+	end
+
+	def fetch_using_mail
 	  @medical_shop = MedicalShop.where(mail: params[:mail])
-	  if @medical_shop.present? && @medical_shop[0].password.eql?(params[:password]) then
-	  	# @medical_shop[1].merge(:authentication => true)
+	  if @medical_shop.present? then
 	  	render json:@medical_shop
 	  else
-	  	render json:{'authentication' => false}
+	  	render json:{'Message' => "MedicalShop Not Found"}
 	  end
 	end
 

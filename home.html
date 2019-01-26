@@ -13,16 +13,6 @@
 </head>
 <script type="text/javascript">
 
-	function gotoPharmacy() {
-		document.getElementById("userForm").style.visibility="hidden";
-		document.getElementById("shopForm").style.visibility="visible";
-	}
-
-	function gotoCustomer() {
-		document.getElementById("userForm").style.visibility="visible";
-		document.getElementById("shopForm").style.visibility="hidden";
-	}
-
 	function gotoNewPharmacy() {
 		location.href="pharmacy.html";	
 	}
@@ -63,7 +53,7 @@
 		  headers:{
 		    'Content-Type': 'application/json'
 		  }
-		}).then(res => res.json())
+		}).then(res => console.log(res.json()))
 		.then(response => console.log('Success:', JSON.stringify(response)))
 		.catch(error => console.error('Error:', error));
 
@@ -87,40 +77,55 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-md-4">
-			<form class="form_style"  id="userForm"> 
-				<div class="form-group">
-					<div class="form-row">
-						<div class="col">
-							<input type="text" name="firstname" placeholder="First Name" required class="form-control">
-						</div>
-						<div class="col">
-							<input type="text" name="lastname" placeholder="Last Name" required class="form-control">
-						</div>
-					</div>
-					<input type="text" name="mobileno" placeholder="Mobile No" required class="form-control">
-					<a class="btn btn-outline-warning btn-block" onclick="VictimCall()">Continue</a><br>
-					<a class="btn text-white" onclick="gotoPharmacy()">Click here to Medical Shop</a>
-				</div>
-			</form>
-			<form class="form_style"  id="shopForm" style="visibility: hidden;"> 
-				<div class="form-group">
+		<div class="col-md-4 mt-5">
+			 <div class="container ">
+               <div class="row justify-content-center">
+                     <div class="col-sm-12" >
+                        <nav >
+                           <div class="nav nav-tabs nav-fill " id="nav-tab" role="tablist">
+                              <a class="nav-item nav-link active show" id="nav-freesignup-tab" data-toggle="tab" href="#nav-freesignup" role="tab" aria-controls="nav-freesignup" aria-selected="trure">Customer View</a>
+                              <a class="nav-item nav-link" id="nav-getoffers-tab" data-toggle="tab" href="#nav-getoffers" role="tab" aria-controls="nav-getoffers" aria-selected="false">Medical Shop</a>
+                           </div>
+                        </nav>
+                     </div>
+                     <div class="tab-content " id="nav-tabContent">
+                        <div class="tab-pane fade active show" id="nav-freesignup" role="tabpanel" aria-labelledby="nav-freesignup-tab">
+                          <form class="form_style"  id="userForm"> 
+							<div class="form-group">
+								<div class="form-row">
+									<div class="col">
+										<input type="text" name="firstname" placeholder="First Name" required class="form-control">
+									</div>
+									<div class="col">
+										<input type="text" name="lastname" placeholder="Last Name" required class="form-control">
+									</div>
+								</div>
+								<input type="text" name="mobileno" placeholder="Mobile No" required class="form-control">
+								<a class="btn btn-outline-warning btn-block" onclick="VictimCall()">Continue</a><br>
+							</div>
+						</form>
+                        </div>
+                        <div class="tab-pane fade" id="nav-getoffers" role="tabpanel" aria-labelledby="nav-getoffers-tab">
+                        <form class="form_style"  id="shopForm"> 
+					<div class="form-group">
 					<div class="form-row">
 						<div class="col">
 							<input type="text" name="mail" placeholder="Email id" required class="form-control">
 						</div>
 					</div>
-					<input type="text" name="password" placeholder="Password" required class="form-control">
+					<input type="password" name="password" placeholder="Password" required class="form-control">
 					<a class="btn btn-outline-warning btn-block" onclick="PharmacyCall()">Continue</a><br>
-					<a id = "nomatch" style="visibility: hidden;color: yellow;">* Username and Password Mismatches</a>
 					<div class="text-center">
-						<a class="btn text-white" onclick="gotoCustomer()">Click here to Customer view</a>
 						<a class="btn text-warning" onclick="gotoNewPharmacy()">New Account</a>
 					</div>
-					
-				</div>
-			</form>
-		</div>
+					<a id = "nomatch" style="visibility: hidden;color: yellow;">* Username and Password Mismatches</a>
+					</div>
+				</form>
+             </div>
+          </center>
+       </div>
+    </div>
+	</div>
 	</div>
 	<!-- <footer class="footer_bg">
 		<div class="row">

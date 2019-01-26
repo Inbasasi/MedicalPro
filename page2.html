@@ -31,30 +31,30 @@
 				<div class="row">
 					<div class="col-md-6">
 						<label for="name">Name of the Medical Shop</label>
-						<input type="text" name="name" placeholder="Medgreen Pharmacy" readonly required class="form-control mb-2">
+						<input type="text" id="name" required class="form-control mb-2">
 						<small id="nameHelp" class="form-text text-white mb-2">Drugstore chain with health & beauty items, plus first-aid supplies & some household products.</small>
 					</div>
 					<div class="col-md-3">
 						<label for="mail">Email Id</label>
-						<input type="mail" name="mail" placeholder="medgreencare@gmail.com" readonly required class="form-control mb-2">
+						<input type="mail" id="mail" required class="form-control mb-2">
 					</div>
 					<div class="col-md-3">
 						<label for="mail">Website</label>
-						<input type="text" name="web" placeholder="www.medgreens.com" readonly required class="form-control mb-2">
+						<input type="text" id="web" required class="form-control mb-2">
 					</div>
 				</div>
 
 				<label for="address">Location</label>
-				<input type="text" name="address" placeholder=" 2nd Main Road, Kottur Gardens, Adyar House, Kotturpuram, Chennai, Tamil Nadu 600085" readonly required class="form-control mb-2">
+				<input type="text" id="address" class="form-control mb-2">
 
 				<div class="row">
 					<div class="col-md-6">
 						<label for="city">City</label>
-						<input type="text" name="city" placeholder="Chennai" readonly required class="form-control mb-2">
+						<input type="text" id="city" required class="form-control mb-2">
 					</div>
 					<div class="col-md-6">
 						<label for="state">State</label>
-						<input type="text" name="state" placeholder="Tamilnadu" readonly required class="form-control mb-2">
+						<input type="text" id="state" required class="form-control mb-2">
 					</div>
 				</div>
 				
@@ -74,7 +74,7 @@
 					</div>
 					<div class="col-md-4">
 						<label for="phone">Mobile No</label>
-						<input type="numbe2" name="mobile" placeholder="9963421022" readonly required class="form-control mb-2">
+						<input type="numbe2" id="mobile" required class="form-control mb-2">
 					</div>
 				</div>
 
@@ -233,10 +233,36 @@
 
 		}
 
+		//Update data through API call 56
+		var mail = window.location.href.substring(68).replace("%22","");
+		if (mail != ""){
+			updateShop(mail)
+		}
 
-			
-			
-
+		function updateShop(mail){
+			var url = 'http://localhost:3000/medical_shops/show';
+			var data = {mail: mail};
+			let query ='?'+Object.keys(data)
+	             .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(data[k]))
+	             .join('&');
+	        url = url + query;
+			fetch(url)
+				.then((res) => { return res.json() })
+				.then((data) => {
+				if (data.Message){
+	              	console.log(data.Message);
+	              }
+	            else{
+	              	document.getElementById("name").value = data[0].name;
+					document.getElementById("web").value = data[0].web;
+					document.getElementById("mail").value = data[0].mail;
+					document.getElementById("address").value = data[0].address;
+					document.getElementById("city").value = data[0].city;
+					document.getElementById("state").value = data[0].state;
+					document.getElementById("mobile").value = data[0].mobile;
+	              }
+	        });		
+		}
 	</script>
 </body>
 </html>

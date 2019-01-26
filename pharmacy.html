@@ -32,26 +32,26 @@
 				<div class="row">
 					<div class="col-md-6">
 						<label for="name">Name of the Medical Shop</label>
-						<input type="text" name="name" placeholder="Medgreen Pharmacy" class="form-control mb-2" required>
+						<input type="text" name="name"  class="form-control mb-2" required>
 						<small id="nameHelp" class="form-text text-white mb-2">Drugstore chain with health & beauty items, plus first-aid supplies & some household products.</small>
 					</div>
 					<div class="col-md-6">
 						<label for="mail">Website</label>
-						<input type="text" name="web" placeholder="www.medgreens.com" class="form-control mb-2" required>
+						<input type="text" name="web"  class="form-control mb-2" required>
 					</div>
 				</div>
 
 				<label for="address">Location</label>
-				<input type="text" name="address" placeholder=" 2nd Main Road, Kottur Gardens, Adyar House, Kotturpuram, Chennai, Tamil Nadu 600085" required class="form-control mb-2">
+				<input type="text" name="address"  required class="form-control mb-2">
 
 				<div class="row">
 					<div class="col-md-6">
 						<label for="city">City</label>
-						<input type="text" name="city" placeholder="Chennai" class="form-control mb-2" required>
+						<input type="text" name="city"  class="form-control mb-2" required>
 					</div>
 					<div class="col-md-6">
 						<label for="state">State</label>
-						<input type="text" name="state" placeholder="Tamilnadu" class="form-control mb-2" required>
+						<input type="text" name="state"  class="form-control mb-2" required>
 					</div>
 				</div>
 				
@@ -71,7 +71,7 @@
 					</div>
 					<div class="col-md-4">
 						<label for="phone">Mobile No</label>
-						<input type="numbe2" name="mobile" placeholder="9963421022" class="form-control mb-2" required>
+						<input type="numbe2" name="mobile"  class="form-control mb-2" required>
 					</div>
 				</div>
 
@@ -102,7 +102,7 @@
 					<div class="form-group">
 						<div class="form-row">
 							<div class="col">
-								<input type="text" name="mail" placeholder="Email id" required class="form-control">
+								<input type="text" name="mail" placeholder="Email" required class="form-control">
 							</div>
 						</div>
 						<input type="text" name="password" placeholder="Password" required class="form-control">
@@ -146,6 +146,8 @@
 			.then(response => console.log('Success:', JSON.stringify(response)))
 			.catch(error => console.error('Error:', error));
 
+			localStorage.setItem( 'shop_details', JSON.stringify(data));
+            location.href="medical_shop.html";
 			alert("Medical Shop has been registered successfully")
 		}
 
