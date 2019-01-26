@@ -12,13 +12,17 @@ class MedicalShopsController < ApplicationController
 	end
 
 	def show
-	  @medical_shop = MedicalShop.find(mail: mail)
-	  render json:@medical_shop
+	  @medical_shop = MedicalShop.where(mail: params[:mail])
+	  if @medical_shop.present? && @medical_shop[0].password.eql?(params[:password]) then
+	  	# @medical_shop[1].merge(:authentication => true)
+	  	render json:@medical_shop
+	  else
+	  	render json:{'authentication' => false}
+	  end
 	end
 
 	def index
 	  @medical_shop = MedicalShop.all
-
 	  render json:@medical_shop
 	end
 	private

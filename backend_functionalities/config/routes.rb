@@ -4,10 +4,12 @@ Rails.application.routes.draw do
   get 'scan' => 'prescriptions#scan'
   resources :victim
 
-  resources :prescriptions, only: [:new, :create, :index, :destroy, :show]
-  resources :medical_shops, only: [:new, :create, :index, :destroy]
+  resources :prescriptions, only: [:new, :create, :index, :destroy]
+  resources :medical_shops
   # root to: 'prescriptions#index'
-  root to: 'medical_shops#index'
+  # root to: 'medical_shops#show'
   root to: 'prescriptions#show'
+  match 'medical_shops/show' => 'medical_shops#show', :via => [:get]
+
 
 end

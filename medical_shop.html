@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="styles.css">
+<title>Process Orders</title>
+<!-- Bootstrap files -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+<link  href="node_modules/cropperjs/dist/cropper.css" rel="stylesheet">
+<script src="node_modules/cropperjs/dist/cropper.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body class="page2"  style="color: white;">
+
+	<div class="container">
+		<div class="alert alert-default mt-4" style="height: 3rem;color: wheat;">
+			<div class="row">
+				<div class="col text-right">
+					<a class="btn" onclick="page1()"><strong>Back</strong></a>
+				</div>
+			</div>
+		</div>
+		<form name="shopDetails"><strong>
+			<div class="form-group">
+				<div class="row">
+					<div class="col-md-6">
+						<label for="name">Name of the Medical Shop</label>
+						<input type="text" id="name" class="form-control mb-2">
+						<small id="nameHelp" class="form-text text-white mb-2">Drugstore chain with health & beauty items, plus first-aid supplies & some household products.</small>
+					</div>
+					<div class="col-md-6">
+						<label for="mail">Email Id</label>
+						<input type="mail" id="mail" value=" " class="form-control mb-2">
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-6">
+						<label for="mail">Website</label>
+						<input type="text" id="web" value=" " class="form-control mb-2">
+					</div>
+					<div class="col-md-6">
+						<label for="address">Location</label>
+						<input type="text" id="address" value=" " class="form-control mb-2">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<label for="city">City</label>
+						<input type="text" id="city" value=" " class="form-control mb-2">
+					</div>
+					<div class="col-md-6">
+						<label for="state">State</label>
+						<input type="text" id="state" value=" " class="form-control mb-2">
+					</div>
+				</div>
+				
+
+				<div class="row">
+					<div class="col-md-8">
+						<label for="hours">Pharmacy Hours</label>
+						<select class="form-control mb-2" readonly>
+							<option>Sunday 9.00 AM - 6.00 PM</option>
+							<option>Monday 9.00 AM -10.30 PM</option>
+							<option>Tuesday 9.00 AM - 10.30 PM</option>
+							<option>Wednesday 9.00 AM - 10.30 PM</option>
+							<option>Thursday 9.00 AM - 10.30 PM</option>
+							<option>Friday 9.00 AM - 10.30 PM</option>
+							<option>Saturday 9.00 AM -10.30 PM</option>
+						</select>
+					</div>
+					<div class="col-md-4">
+						<label for="phone">Mobile No</label>
+						<input type="numbe2" id="mobile" value=" " class="form-control mb-2">
+					</div>
+				</div>
+
+				<div class="row mt-2">
+					<div class="col-md-4">
+					    <a class="btn btn-default form-control btn-dark">Look for Orders</a>
+					</div>
+				</div>
+			</div></strong>
+		</form>
+	</div>
+</body>
+
+<script type="text/javascript">
+	var shop_details = localStorage['shop_details'];
+	// localStorage.removeItem( 'shop_details' ); 
+	console.log(shop_details);
+	document.getElementById("name").value = shop_details[name];
+
+	function page1(){
+		location.href="home.html";
+	}
+</script>

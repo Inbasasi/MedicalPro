@@ -30,18 +30,23 @@
 	function PharmacyCall() {
 		var mail = document.getElementsByName("mail")[0].value;
 		var password = document.getElementsByName("password")[0].value;
-		var url = 'http://localhost:3000/medical_shops#show';
+		var url = 'http://localhost:3000/medical_shops/show';
 		var data = {mail: mail, password: password};
-
-		fetch(url, {
-		  method: 'POST', // or 'PUT'
-		  body: JSON.stringify(data), // data can be `string` or {object}!
-		  headers:{
-		    'Content-Type': 'application/json'
-		  }
-		}).then(res => res.json())
-		.then(response => console.log('Success:', JSON.stringify(response)))
-		.catch(error => console.error('Error:', error));
+		let query ='?'+Object.keys(data)
+             .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(data[k]))
+             .join('&');
+        url = url + query;
+		fetch(url)
+			.then((res) => { return res.json() })
+			.then((data) => {
+              if (data.authentication == false){
+              	document.getElementById("nomatch").style.visibility="visible";
+              }
+              else{
+              	localStorage.setItem( 'shop_details', JSON.stringify(data[0]));
+              	location.href="medical_shop.html";
+              }
+        });
 
 	}
 	// Api call
@@ -107,6 +112,7 @@
 					</div>
 					<input type="text" name="password" placeholder="Password" required class="form-control">
 					<a class="btn btn-outline-warning btn-block" onclick="PharmacyCall()">Continue</a><br>
+					<a id = "nomatch" style="visibility: hidden;color: yellow;">* Username and Password Mismatches</a>
 					<div class="text-center">
 						<a class="btn text-white" onclick="gotoCustomer()">Click here to Customer view</a>
 						<a class="btn text-warning" onclick="gotoNewPharmacy()">New Account</a>
