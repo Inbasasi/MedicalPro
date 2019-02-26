@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   # root to: 'prescriptions#index'
   # root to: 'medical_shops#show'
   root to: 'prescriptions#show'
+  match 'prescriptions/show' => 'prescriptions/show', :via => [:get]
   match 'medical_shops/show' => 'medical_shops#show', :via => [:get]
   # match 'medical_shops/fetch_using_mail' => 'medical_shops#fetch_using_mail', :via => [:get]
   get 'medical_shops/fetch_using_mail' => 'medical_shops#fetch_using_mail'

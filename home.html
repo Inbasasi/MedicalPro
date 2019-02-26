@@ -17,6 +17,10 @@
 		location.href="pharmacy.html";	
 	}
 
+	// fetch mail id from URL
+	var mail = window.location.href.substring(64).replace("%22","");
+	localStorage.setItem( 'shop_mail', JSON.stringify(mail));
+	
 	function PharmacyCall() {
 		var mail = document.getElementsByName("mail")[0].value;
 		var password = document.getElementsByName("password")[0].value;
@@ -82,7 +86,7 @@
                <div class="row justify-content-center">
                      <div class="col-sm-12" >
                         <nav >
-                           <div class="nav nav-tabs nav-fill " id="nav-tab" role="tablist">
+                           <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                               <a class="nav-item nav-link active show" id="nav-freesignup-tab" data-toggle="tab" href="#nav-freesignup" role="tab" aria-controls="nav-freesignup" aria-selected="trure">Customer View</a>
                               <a class="nav-item nav-link" id="nav-getoffers-tab" data-toggle="tab" href="#nav-getoffers" role="tab" aria-controls="nav-getoffers" aria-selected="false">Medical Shop</a>
                            </div>

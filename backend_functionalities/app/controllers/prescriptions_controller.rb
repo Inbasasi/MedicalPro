@@ -5,13 +5,12 @@ class PrescriptionsController < ApplicationController
 	end
 
 	def index
-		@prescriptions = Prescription.find(1)
+		# @prescriptions = Prescription.find(1)
 		render json:@prescriptions
 	end
 
 	def show
-		# @id = params[:id]
-		@prescription = Prescription.find(0)
+		@prescription = Prescription.where(shop_mail_id: params[:mail])
 		render json:@prescription
 	end
 
@@ -28,6 +27,6 @@ class PrescriptionsController < ApplicationController
 	private 
 
 	def prescription_params
-		params.permit(:name, :mobileNo, :photo, :url)
+		params.permit(:name, :mobileNo, :photo, :url, :shop_mail_id)
 	end
 end

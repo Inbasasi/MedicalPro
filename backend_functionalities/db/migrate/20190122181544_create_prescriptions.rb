@@ -4,6 +4,7 @@ class CreatePrescriptions < ActiveRecord::Migration[5.2]
       t.string :name
       t.string :mobileNo
       t.string :url
+      t.string :shop_mail_id
       t.timestamps
     end
   end

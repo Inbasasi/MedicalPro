@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 2019_01_25_190132) do
     t.string "name"
     t.string "mobileNo"
     t.string "url"
+    t.string "shop_mail_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "photo_file_name"

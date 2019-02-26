@@ -85,10 +85,24 @@
 						<a class="btn btn-default form-control btn-dark" data-toggle="modal" data-target="#myModal">View QR Code</a>
 					</div>
 					<div class="col-md-6">
-					    <a class="btn btn-default form-control btn-dark">Look for Orders</a>
+					    <a class="btn btn-default form-control btn-dark" onclick="showOrders()">Look for Orders</a>
 					</div>
 				</div>
-			</div></strong>
+			</div>
+		</strong>
+
+		<div class="container" id = "order" style="visibility: hidden;">
+			<div class="row">
+					<div class="col-md-6">
+						<label for="victim_name">Customer Name</label>
+						<input type="text" id="victim_name" class="form-control mb-2">
+					</div>
+					<div class="col-md-6">
+						<label for="victim_mobile">Mobile No</label>
+						<input type="text" id="victim_mobile" class="form-control mb-2">
+					</div>
+				</div>
+		</div><br>
 		</form>
 	</div>
 
@@ -119,7 +133,7 @@
 		shop_details = JSON.parse(shop_details);
 		document.getElementById("name").value = shop_details['name'];
 		document.getElementById("web").value = shop_details['web'];
-		document.getElementById("mail").value = shop_details['mail'];
+		mail = document.getElementById("mail").value = shop_details['mail'];
 		document.getElementById("address").value = shop_details['address'];
 		document.getElementById("city").value = shop_details['city'];
 		document.getElementById("state").value = shop_details['state'];
@@ -138,4 +152,23 @@
         else
           element.appendChild(showQRCode(text));
       }
+
+    function showOrders(){
+			var url = 'http://localhost:3000/prescriptions/show';
+			var data = {mail: mail};
+			let query ='?'+Object.keys(data)
+	             .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(data[k]))
+	             .join('&');
+	        url = url + query;
+			fetch(url)
+				.then((res) => { return res.json() })
+				.then((data) => {
+				if (data){
+					document.getElementById("order").style.visibility="visible";
+					document.getElementById("victim_name").value = data[0].name;
+					document.getElementById("victim_mobile").value = data[0].mobileNo;
+	              	$('#order').append( $('<img>').attr('src', data[0].url))
+	              }
+	        });				
+	    }
 </script>

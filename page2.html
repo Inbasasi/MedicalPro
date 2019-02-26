@@ -208,6 +208,7 @@
 			// $result = $('#result');
 			formData.append('name', 'inba');
 			formData.append('mobileNo', '9043595542');
+			formData.append('shop_mail_id', mail);
 			formData.append('photo', input.files[0]);
 			formData.append('url', croppedImageDataURL)
 			fetch(url, {
@@ -234,7 +235,8 @@
 		}
 
 		//Update data through API call 56
-		var mail = window.location.href.substring(68).replace("%22","");
+		mail = localStorage['shop_mail'].replace(/"/g,"");
+ 		localStorage.removeItem( 'shop_mail' );
 		if (mail != ""){
 			updateShop(mail)
 		}
