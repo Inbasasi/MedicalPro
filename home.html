@@ -54,8 +54,8 @@
 		var lname = document.getElementsByName("lastname")[0].value;
 		var mno = document.getElementsByName("mobileno")[0].value;
 	  	var url = 'https://meds-api-cip.herokuapp.com/victim#create';
-		var data = {name: fname + " " + lname, mobileNo: mno};
-
+		data = {name: fname + " " + lname, mobileNo: mno};
+		localStorage.setItem( 'user', JSON.stringify(data));
 		fetch(url, {
 		  method: 'POST', // or 'PUT'
 		  body: JSON.stringify(data), // data can be `string` or {object}!
@@ -65,11 +65,9 @@
 		}).then(res => console.log(res.json()))
 		.then(response => console.log('Success:', JSON.stringify(response)))
 		.then((data) => {
-			localStorage.setItem( 'user', JSON.stringify(data));
 	    	location.href="page2.html";	
 		})
 		.catch(error => console.error('Error:', error));
-		
 	}
 </script>
 <body class="whole">

@@ -293,18 +293,14 @@
 	              }
 	        });		
 		}
+
+	mail = localStorage['shop_mail'].replace(/"/g,"");
+	if (mail != ""){
+		updateShop(mail)
+	}
 	if (localStorage.getItem("img_url") !== null) {
 		croppedImageDataURL = JSON.parse(localStorage['img_url']);
-	}
-	
-	user = JSON.parse(localStorage['user']);
-	if (typeof croppedImageDataURL != 'undefined'){
-
-		mail = localStorage['shop_mail'].replace(/"/g,"");
- 		// localStorage.removeItem( 'shop_mail' );
-		if (mail != ""){
-			updateShop(mail)
-		}
+		user = JSON.parse(localStorage['user']);
 		document.getElementById('status').style.visibility = 'visible';
 		inst1 = document.getElementById('scan_btn')
 		inst1.parentNode.removeChild(inst1);
@@ -316,15 +312,6 @@
 		document.getElementById("mobile1").value = user['mobileNo'];
 		document.getElementById("CustomerImage").src = croppedImageDataURL;
 		updateStatus(user['mobileNo'])
-	}
-	else{
-		
-		//Update data through API call 56
-		mail = localStorage['shop_mail'].replace(/"/g,"");
- 		// localStorage.removeItem( 'shop_mail' );
-		if (mail != ""){
-			updateShop(mail)
-		}
 	}
 
 
@@ -351,7 +338,6 @@
 						b1.value = "Rejected";
 						b1.className = "btn btn-danger btn-sm btn-block";
 	              	}
-	              	console.log("Xxcxc")
 	              	$('#status').append(b1);
 			}
 	    });		
