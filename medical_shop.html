@@ -91,16 +91,16 @@
 			</div>
 		</strong>
 
-		<div class="container" id = "order" style="visibility: hidden;">
-			<div class="row">
-					<div class="col-md-6">
+		<div class="container">
+			<div class="row" id = "order" style="padding: 3rem;"><br>
+					<!-- <div class="col-md-6">
 						<label for="victim_name">Customer Name</label>
 						<input type="text" id="victim_name" class="form-control mb-2">
 					</div>
 					<div class="col-md-6">
 						<label for="victim_mobile">Mobile No</label>
 						<input type="text" id="victim_mobile" class="form-control mb-2">
-					</div>
+					</div> -->
 				</div>
 		</div><br>
 		</form>
@@ -123,11 +123,76 @@
 
 	  </div>
 	</div>
+
+	<div id="myModalAccept" class="modal fade text-dark" role="dialog">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h4 class="modal-title">Confirm Order?</h4>
+	      </div>
+	      <div class="modal-body">
+	        <div class="container">
+	        <form id="orderAccept">
+			<div class="row">
+					<div class="col-md-6">
+						<label for="victim_name">Customer Name</label>
+						<input type="text" id="victim_name" class="form-control mb-2">
+					</div>
+					<div class="col-md-6">
+						<label for="victim_mobile">Mobile No</label>
+						<input type="text" id="victim_mobile" class="form-control mb-2">
+					</div>
+				</div>
+				<img src="" id="myImage" />
+			</form>
+		</div>
+	      </div>
+	      <div class="modal-footer">
+	      	<button type="button" class="btn btn-info" id="sure">Yes</button>
+	        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+	      </div>
+	    </div>
+
+	  </div>
+	</div>
+
+	<div id="myModalReject" class="modal fade text-dark" role="dialog">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h4 class="modal-title">Reject Order?</h4>
+	      </div>
+	      <div class="modal-body">
+	        <div class="container">
+	        <form id="orderAccept">
+			<div class="row">
+					<div class="col-md-6">
+						<label for="victim_name">Customer Name</label>
+						<input type="text" id="victim_name1" class="form-control mb-2">
+					</div>
+					<div class="col-md-6">
+						<label for="victim_mobile">Mobile No</label>
+						<input type="text" id="victim_mobile1" class="form-control mb-2">
+					</div>
+				</div>
+				<img src="" id="myImage1" />
+			</form>
+		</div>
+	      </div>
+	      <div class="modal-footer">
+	      	<button type="button" class="btn btn-info" id="sure1">Yes</button>
+	        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+	      </div>
+	    </div>
+
+	  </div>
+	</div>
+
 </body>
 
 <script type="text/javascript">
 	var shop_details = localStorage['shop_details'];
-	localStorage.removeItem( 'shop_details' ); 
+	// localStorage.removeItem( 'shop_details' ); 
 	
 	if (typeof shop_details !== 'undefined') {
 		shop_details = JSON.parse(shop_details);
@@ -138,6 +203,9 @@
 		document.getElementById("city").value = shop_details['city'];
 		document.getElementById("state").value = shop_details['state'];
 		document.getElementById("mobile").value = shop_details['mobile'];
+		if (shop_details['order_accepted'] == true) {
+
+		}
 		createQRCode('https://medical-mini-inba.herokuapp.com/page2.html?mail='+shop_details['mail'])
 	}
 	function page1(){
@@ -154,7 +222,9 @@
       }
 
     function showOrders(){
-			var url = 'http://localhost:3000/prescriptions/show';
+    		$('#order').empty();
+    		
+			var url = 'https://meds-api-cip.herokuapp.com/prescriptions/show';
 			var data = {mail: mail};
 			let query ='?'+Object.keys(data)
 	             .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(data[k]))
@@ -164,11 +234,137 @@
 				.then((res) => { return res.json() })
 				.then((data) => {
 				if (data){
-					document.getElementById("order").style.visibility="visible";
-					document.getElementById("victim_name").value = data[0].name;
-					document.getElementById("victim_mobile").value = data[0].mobileNo;
-	              	$('#order').append( $('<img>').attr('src', data[0].url))
+					order_values = data;
+					for (var i = 0; i < order_values.length; i++) {
+						document.getElementById("order").style.visibility="visible";
+						var div1 = document.createElement("div");
+						div1.className = "col-md-6"
+						var e1 = document.createElement("Label");
+						e1.innerHTML = "Customer Name";
+						
+						var e2 = document.createElement("input");
+						e2.type = "text";
+						e2.value = data[i].name;
+						e2.className = "form-control mb-2";
+
+						var div2 = document.createElement("div");
+						div2.className = "col-md-6"
+						var e3 = document.createElement("Label");
+						e3.innerHTML = "Mobile No";
+						var e4 = document.createElement("input");
+						e4.type = "text";
+						e4.value = data[i].mobileNo;
+						e4.className = "form-control mb-2";
+						var cont = document.getElementById("order");
+						cont.appendChild(div1);
+						cont.appendChild(div2);
+						cont.appendChild(e1);
+						cont.appendChild(e2);
+						
+						cont.appendChild(e3);
+						cont.appendChild(e4);
+						$('#order').append( $('<img class="center">').attr('src', data[i].url))
+						b1 = document.createElement("input");
+						b1.type = "button";
+						b1.value = "Accept";
+						b1.name = "approve";
+						b1.id = i;
+						b1.className = "btn btn-outline-success btn-sm btn-block";
+						$('#order').append(b1);
+						b2 = document.createElement("input");
+						b2.type = "button";
+						b2.value = "Reject";
+						b2.name = "reject";
+						b2.id = i+100;
+						b2.className = "btn btn-outline-danger btn-sm btn-block";
+						$('#order').append(b2);
+						if (order_values[i]['order_accepted'] == true || order_values[i]['order_accepted'] == false){
+							update_button_functionalities(order_values[i]['order_accepted'],i)
+						}
+						else
+						{
+							b1.onclick = function(){accept_order(this.id)}
+							b2.onclick = function(){
+								id_val = this.id-100;
+								$('#myModalReject').modal('show');
+								document.getElementById("victim_name1").value = order_values[this.id-100].name;
+								document.getElementById("victim_mobile1").value = order_values[this.id-100].mobileNo;
+	          					document.getElementById("myImage1").src = order_values[this.id-100].url;
+	          					sure1 = document.getElementById('sure1');
+					          	button_ins = document.getElementById(this.id-100);
+					          	button_ins1 = document.getElementById(this.id);
+					          	sure1.onclick = function(){
+					          		updateOrder(order_values[id_val],false);
+					          		button_ins.parentNode.removeChild(button_ins);
+					          		button_ins1.value = "Rejected";
+	          						button_ins1.className = "btn btn-danger btn-sm btn-block"
+	          						$('#myModalReject').modal('hide');
+					          	}
+					          	
+							}
+						}
+					}
+					// document.getElementById("order").style.visibility="visible";
+					// document.getElementById("victim_name").value = data[0].name;
+					// document.getElementById("victim_mobile").value = data[0].mobileNo;
+	              	// $('#order').append( $('<img>').attr('src', data[0].url))
 	              }
 	        });				
 	    }
+
+	    function accept_order(index){
+	    	document.getElementById('orderAccept').reset();
+	    	$('#myModalAccept').modal('show');
+			document.getElementById("victim_name").value = order_values[index].name;
+			document.getElementById("victim_mobile").value = order_values[index].mobileNo;
+          	document.getElementById("myImage").src = order_values[index].url;
+          	sure = document.getElementById('sure');
+          	button_ins1 = document.getElementById(Number(index)+100);
+          	button_ins = document.getElementById(index);
+          	sure.onclick = function(){
+          		updateOrder(order_values[index],true);
+          		button_ins1.parentNode.removeChild(button_ins1);
+          		button_ins.value = "Accepted";
+          		button_ins.className = "btn btn-success btn-sm btn-block"
+          		$('#myModalAccept').modal('hide');
+          	}
+          	
+	    }
+
+	    function updateOrder(order, val){
+			var url = 'https://meds-api-cip.herokuapp.com/prescriptions/update';
+			var data = {id: order['id'], value: val};
+			let query ='?'+Object.keys(data)
+	             .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(data[k]))
+	             .join('&');
+	        url = url + query;
+			fetch(url)
+				.then((res) => { return res.json() })
+				.then((data) => {
+				if (data.Message){
+	              	console.log(data.Message);
+	              }
+	            else{
+	              	console.log(data);
+	              }
+	        });		
+		}
+
+		function update_button_functionalities(boolean,index){
+			
+			if (boolean == true){
+				button_ins1 = document.getElementById(Number(index)+100);
+          		button_ins2 = document.getElementById(index);
+				button_ins1.parentNode.removeChild(button_ins1);
+          		button_ins2.value = "Accepted";
+          		button_ins2.className = "btn btn-success btn-sm btn-block"
+			}
+			else{
+				button_ins1 = document.getElementById(Number(index)+100);
+          		button_ins2 = document.getElementById(index);
+				button_ins2.parentNode.removeChild(button_ins2);
+			    button_ins1.value = "Rejected";
+				button_ins1.className = "btn btn-danger btn-sm btn-block"
+			}
+		}
 </script>

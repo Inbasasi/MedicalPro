@@ -133,7 +133,7 @@
 			var password = document.getElementsByName("password")[0].value;
 
 			// api call
-			var url = 'http://localhost:3000/medical_shops#index';
+			var url = 'https://meds-api-cip.herokuapp.com/medical_shops#index';
 			var data = {name: name, web: web, address: address, city: city, state: state, mobile: mobile, mail: mail, password: password};
 
 			fetch(url, {

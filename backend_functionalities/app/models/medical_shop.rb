@@ -1,2 +1,0 @@
-class MedicalShop < ApplicationRecord
-end

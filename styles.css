@@ -78,5 +78,9 @@ img {
   border: 1px solid black;
 }
 
-
-
+@media (min-width: 755px) and (max-width: 1072px) {
+  .btn btn-success btn-sm btn-block {
+    padding:3rem;
+    font-size:90%;
+    line-height: 1.2;
+  }

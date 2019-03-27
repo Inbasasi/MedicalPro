@@ -85,7 +85,7 @@
 					  	</div>
 					</div>
 					<div class="col-md-4">
-					    <label for="files" class="btn btn-default form-control btn-dark">Scan Prescription</label>
+					    <label for="files" class="btn btn-default form-control btn-dark" id="scan_btn">Scan Prescription</label>
      					 <input id="files" style="visibility:hidden;" type="file" name="image" accept="image/*" capture="environment">
 					</div>
 				</div>
@@ -100,7 +100,7 @@
 	<!-- <button type="button" class="btn btn-info" onclick="showimage()">show</button> -->
 	<!-- <div id="check"></div> -->
 
-	<div class="container img-fluid" alt="Responsive image">
+	<div class="container img-fluid" alt="Responsive image" id="img_edit">
 		 <canvas id="canvas" class="mr-5"></canvas>
 	</div>
 	
@@ -125,7 +125,24 @@
 
 	  </div>
 	</div>
+	<div class="container" style="visibility: hidden;" id="status">
+		<p><strong>Order Status</strong></p>
+		<form id="orderAccept">
+			<div class="row">
+					<div class="col-md-6">
+						<label for="victim_name">Customer Name</label>
+						<input type="text" id="name1" class="form-control mb-2">
+					</div>
+					<div class="col-md-6">
+						<label for="mobile1">Mobile No</label>
+						<input type="text" id="mobile1" class="form-control mb-2">
+					</div>
+				</div>
+			<img src="" id="CustomerImage" />
+		</form>
+	</div>
 
+	<br><br><br>
 	<!-- <footer class="footer_bg">
 		<div class="row">
 			<div class="col-md-2">
@@ -144,7 +161,6 @@
 	    context = canvas.get(0).getContext("2d"),
 	    $result = $('#result');
 	    var input = document.querySelector('input[type=file]');
-	    console.log(input.files[0]);
   		input.onchange = function () {
 		    if (this.files && this.files[0]) {
 		      if ( this.files[0].type.match(/^image\//) ) {
@@ -202,12 +218,12 @@
 
 		function UploadPrescription() {
 
-		  	var url = 'http://localhost:3000/prescriptions#create';
-			var data = {name: "example", mobileNo: "977232323", medical_sheet: croppedImageDataURL};
+		  	var url = 'https://meds-api-cip.herokuapp.com/prescriptions#create';
 			var formData = new FormData();
 			// $result = $('#result');
-			formData.append('name', 'inba');
-			formData.append('mobileNo', '9043595542');
+			user = JSON.parse(localStorage['user']);
+			formData.append('name', user['name'] );
+			formData.append('mobileNo', user['mobileNo'] );
 			formData.append('shop_mail_id', mail);
 			formData.append('photo', input.files[0]);
 			formData.append('url', croppedImageDataURL)
@@ -221,11 +237,28 @@
 			.then(response => response.json())
 			.catch(error => console.error('Error:', error))
 			.then(response => console.log('Success:', JSON.stringify(response)));
-
+			$('#myModal').modal('hide');
+			inst1 = document.getElementById('scan_btn')
+			inst1.parentNode.removeChild(inst1);
+			inst2 = document.getElementById('picEdit')
+			inst2.parentNode.removeChild(inst2);
+			inst3 = document.getElementById('img_edit')
+			inst3.parentNode.removeChild(inst3);
+			document.getElementById("name1").value = user['name'];
+			document.getElementById("mobile1").value = user['mobileNo'];
+			document.getElementById('status').style.visibility = 'visible';
+			document.getElementById("CustomerImage").src = croppedImageDataURL;
+			localStorage.setItem( 'img_url', JSON.stringify(croppedImageDataURL));
 		}
 
+
+	
+			
+		
+
+
 		function showimage(){
-			var url = 'http://localhost:3000/prescriptions#show';
+			var url = 'https://meds-api-cip.herokuapp.com/prescriptions#show';
 			fetch(url)
 			.then((res) => { return res.json() })
 			.then((data) => {
@@ -234,15 +267,10 @@
 
 		}
 
-		//Update data through API call 56
-		mail = localStorage['shop_mail'].replace(/"/g,"");
- 		localStorage.removeItem( 'shop_mail' );
-		if (mail != ""){
-			updateShop(mail)
-		}
+		
 
 		function updateShop(mail){
-			var url = 'http://localhost:3000/medical_shops/show';
+			var url = 'https://meds-api-cip.herokuapp.com/medical_shops/show';
 			var data = {mail: mail};
 			let query ='?'+Object.keys(data)
 	             .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(data[k]))
@@ -265,6 +293,71 @@
 	              }
 	        });		
 		}
+	if (localStorage.getItem("img_url") !== null) {
+		croppedImageDataURL = JSON.parse(localStorage['img_url']);
+	}
+	
+	user = JSON.parse(localStorage['user']);
+	if (typeof croppedImageDataURL != 'undefined'){
+
+		mail = localStorage['shop_mail'].replace(/"/g,"");
+ 		// localStorage.removeItem( 'shop_mail' );
+		if (mail != ""){
+			updateShop(mail)
+		}
+		document.getElementById('status').style.visibility = 'visible';
+		inst1 = document.getElementById('scan_btn')
+		inst1.parentNode.removeChild(inst1);
+		inst2 = document.getElementById('picEdit')
+		inst2.parentNode.removeChild(inst2);
+		inst3 = document.getElementById('img_edit')
+		inst3.parentNode.removeChild(inst3);
+		document.getElementById("name1").value = user['name'];
+		document.getElementById("mobile1").value = user['mobileNo'];
+		document.getElementById("CustomerImage").src = croppedImageDataURL;
+		updateStatus(user['mobileNo'])
+	}
+	else{
+		
+		//Update data through API call 56
+		mail = localStorage['shop_mail'].replace(/"/g,"");
+ 		// localStorage.removeItem( 'shop_mail' );
+		if (mail != ""){
+			updateShop(mail)
+		}
+	}
+
+
+	function updateStatus(mob){
+		var url = 'https://meds-api-cip.herokuapp.com/prescriptions/get_status';
+			var data = {mobileNo: mob};
+			let query ='?'+Object.keys(data)
+	             .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(data[k]))
+	             .join('&');
+	        url = url + query;
+			fetch(url)
+				.then((res) => { return res.json() })
+				.then((data) => {
+				if (data[0]['order_accepted'] != null){
+	              	b1 = document.createElement("input");
+					b1.type = "button";
+					b1.id = 'status0';
+					b1.name = "status";
+					if (data[0]['order_accepted'] == true) {
+						b1.value = "Accepted";
+						b1.className = "btn btn-success btn-sm btn-block";
+					}
+					else{
+						b1.value = "Rejected";
+						b1.className = "btn btn-danger btn-sm btn-block";
+	              	}
+	              	console.log("Xxcxc")
+	              	$('#status').append(b1);
+			}
+	    });		
+	}
+
+
 	</script>
 </body>
 </html>
